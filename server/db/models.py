@@ -11,3 +11,26 @@ class Addresses(db.Model):
     state = db.Column(db.String)
     country_code = db.Column(db.String)
     geolocation = db.Column(db.String)
+
+
+class Doors(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sensor_uuid = db.Column(db.String)
+    name = db.Column(db.String)
+    address_id = db.Column(db.String)
+    installation_time = db.Column(db.String)
+
+
+class Users(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
+    creation_time = db.Column(db.String)
+
+
+class UserDoorPermissions(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer)
+    door_id = db.Column(db.Integer)
+    creation_time = db.Column(db.String)
