@@ -8,7 +8,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import db.schemas as schemas
 import db.models as models
-from constants import API_VERSION, BASE_API_URL, LAST_OPENING_KEY, MAX_DOORS_PER_PAGE
+from constants import (
+    API_VERSION,
+    BASE_API_URL,
+    LAST_OPENING_KEY,
+    LAST_COMMUNICATION_KEY,
+    MAX_DOORS_PER_PAGE,
+)
 from utils.utils import make_json_response, unpack_door_details, unpack_door_users
 
 app = Flask(__name__)
@@ -97,12 +103,16 @@ def get_doors_detailed(page=1):
         .paginate(page, per_page=MAX_DOORS_PER_PAGE)
     )
     doors_last_open = {}
+    doors_last_comm = {}
     for door, address in doors_addresses.items:
         doors_last_open[door.sensor_uuid] = redis.get(
             LAST_OPENING_KEY + ":" + door.sensor_uuid
         )
+        doors_last_comm[door.sensor_uuid] = redis.get(
+            LAST_COMMUNICATION_KEY + ":" + door.sensor_uuid
+        )
     return make_json_response(
-        unpack_door_details(doors_addresses.items, doors_last_open)
+        unpack_door_details(doors_addresses.items, doors_last_open, doors_last_comm)
     )
 
 
