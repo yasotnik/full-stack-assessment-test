@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # encoding: utf-8
 import json
+import redis
 from flask import Flask, make_response, request, abort
 from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import db.schemas as schemas
 import db.models as models
-from constants import API_VERSION, BASE_API_URL
+from constants import API_VERSION, BASE_API_URL, LAST_OPENING_KEY, MAX_DOORS_PER_PAGE
 from utils.utils import make_json_response, unpack_door_details, unpack_door_users
 
 app = Flask(__name__)
@@ -15,6 +16,8 @@ app.config.from_object("config.DebugConfig")
 db = SQLAlchemy()
 ma = Marshmallow()
 db.init_app(app)
+
+redis = redis.Redis(host="127.0.0.1", port="6379", decode_responses=True)
 
 api_prefix = "/{}/{}".format(BASE_API_URL, API_VERSION)
 
@@ -86,11 +89,21 @@ def get_users_doors_permissions_list():
 
 
 @app.route(api_prefix + "/doors_detailed_list/", methods=["GET"])
-def get_doors_detailed():
+@app.route(api_prefix + "/doors_detailed_list/page/<int:page>", methods=["GET"])
+def get_doors_detailed(page=1):
     doors_addresses = (
-        db.session.query(models.Doors, models.Addresses).join(models.Addresses).all()
+        db.session.query(models.Doors, models.Addresses)
+        .join(models.Addresses)
+        .paginate(page, per_page=MAX_DOORS_PER_PAGE)
     )
-    return make_json_response(unpack_door_details(doors_addresses))
+    doors_last_open = {}
+    for door, address in doors_addresses.items:
+        doors_last_open[door.sensor_uuid] = redis.get(
+            LAST_OPENING_KEY + ":" + door.sensor_uuid
+        )
+    return make_json_response(
+        unpack_door_details(doors_addresses.items, doors_last_open)
+    )
 
 
 app.run()

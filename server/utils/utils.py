@@ -2,7 +2,7 @@ import json
 from flask import make_response
 
 
-def unpack_door_details(doors_addresses):
+def unpack_door_details(doors_addresses, doors_last_open):
     acc = []
     for door, address in doors_addresses:
         acc.append(
@@ -11,6 +11,7 @@ def unpack_door_details(doors_addresses):
                 "name": door.name,
                 "installation_time": door.installation_time,
                 "sensor_uuid": door.sensor_uuid,
+                "last_opening": doors_last_open[door.sensor_uuid],
                 "address": {
                     "street": address.street,
                     "city": address.city,
