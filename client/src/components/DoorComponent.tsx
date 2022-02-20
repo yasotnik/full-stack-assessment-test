@@ -16,7 +16,9 @@ const DoorComponent: React.FC<DoorComponentProps> = (props) => {
                 <div className={"door-component--status"}>
                     <StatusComponent status={props.door_status} />
                 </div>
-                <div className={"door-component--name"}>{props.door.name}</div>
+                <div className={"door-component--title"}>
+                    {props.door.name} <span>#{props.door.id}</span>
+                </div>
             </div>
             <div className="door-component--image-container">
                 <img className="door-component--image" src={props.image}></img>

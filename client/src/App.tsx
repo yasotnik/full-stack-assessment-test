@@ -21,6 +21,8 @@ function App() {
         "https://images.squarespace-cdn.com/content/v1/50a4739ae4b000dda4d98149/1404186421933-O4S2L8HD35QEEV3B2VNY/dickinson.jpg",
     ];
 
+    const doorsStatuses = [true, false];
+
     useEffect(() => {
         API.get<DoorInterface[]>(`doors_detailed_list/page/${1}`)
             .then((res) => {
@@ -34,9 +36,9 @@ function App() {
             });
     }, []);
 
-    if (isLoading) {
-        return <div className="doors-app--container">Loading....</div>;
-    }
+    // if (isLoading) {
+    //     return <div className="doors-app--container">Loading data....</div>;
+    // }
 
     return (
         <div className="doors-app--container">
@@ -48,7 +50,11 @@ function App() {
                                 Math.floor(Math.random() * doorsImages.length)
                             ]
                         }
-                        door_status={true}
+                        door_status={
+                            doorsStatuses[
+                                Math.floor(Math.random() * doorsStatuses.length)
+                            ]
+                        }
                         door={door}
                     />
                 </div>
