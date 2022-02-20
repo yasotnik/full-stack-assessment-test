@@ -1,5 +1,6 @@
 import * as React from "react";
 import { DoorInterface } from "../constants/commons";
+import ButtonComponent from "./ButtonComponent";
 import StatusComponent from "./StatusComponent";
 
 export interface DoorComponentProps {
@@ -36,6 +37,9 @@ const DoorComponent: React.FC<DoorComponentProps> = (props) => {
                     <strong>Last communication: </strong>
                     {props.door.last_com}
                 </span>
+            </div>
+            <div className="door-component--button-container">
+                <ButtonComponent onClick={() => {}} />
             </div>
         </div>
     );
