@@ -8,7 +8,7 @@ from flask_marshmallow import Marshmallow
 import db.schemas as schemas
 import db.models as models
 from constants import API_VERSION, BASE_API_URL
-from utils.utils import unpack_door_details, make_json_response, unpack_door_users
+from utils.utils import make_json_response, unpack_door_details, unpack_door_users
 
 app = Flask(__name__)
 app.config.from_object("config.DebugConfig")
