@@ -1,6 +1,17 @@
 import json
+from datetime import datetime
 from flask import make_response
 
+def timestamp_to_datetime(ts):
+    if ts:
+        ts = float(ts)
+        return datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+    else: return "-"
+
+def parse_timestamp_with_timezone(tsz):
+    if tsz:
+        return datetime.strftime(tsz,"%Y-%m-%d %H:%M:%S")
+    else: return "-"
 
 def unpack_door_details(doors_addresses, doors_last_open, door_last_comm):
     acc = []
@@ -9,10 +20,10 @@ def unpack_door_details(doors_addresses, doors_last_open, door_last_comm):
             {
                 "id": door.id,
                 "name": door.name,
-                "installation_time": door.installation_time,
+                "installation_time": parse_timestamp_with_timezone(door.installation_time),
                 "sensor_uuid": door.sensor_uuid,
-                "last_opening": doors_last_open[door.sensor_uuid],
-                "last_com": door_last_comm[door.sensor_uuid],
+                "last_opening": timestamp_to_datetime(doors_last_open[door.sensor_uuid]),
+                "last_com": timestamp_to_datetime(door_last_comm[door.sensor_uuid]),
                 "address": {
                     "street": address.street,
                     "city": address.city,
