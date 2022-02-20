@@ -19,7 +19,7 @@ db.init_app(app)
 api_prefix = "/{}/{}".format(BASE_API_URL, API_VERSION)
 
 
-@app.route("/" + BASE_API_URL + "/health_check/", methods=["GET"])
+@app.route("/" + BASE_API_URL + "/is_online/", methods=["GET"])
 def health_check():
     return json.dumps(
         {
@@ -32,14 +32,16 @@ def health_check():
 def get_addresses_list():
     addresses = models.Addresses.query.all()
     addresses_schema = schemas.AddressesSchema(many=True)
-    return addresses_schema.dumps(addresses, ensure_ascii=False)
+    response = make_response(addresses_schema.dumps(addresses, ensure_ascii=False))
+    response.headers["Content-Type"] = "application/json"
+    return response
 
 
 @app.route(api_prefix + "/doors/", methods=["GET"])
 def get_doors_list():
     query_parameters = request.args
     if query_parameters.get("id"):
-        # put into redis?
+        # store in redis?
         doors_schema = schemas.DoorsSchema()
         users_doors_permissions_schema = schemas.UsersDoorsPermissionsSchema(many=True)
         door_id = query_parameters.get("id")
@@ -74,9 +76,13 @@ def get_users_list():
 def get_users_doors_permissions_list():
     users_doors_permissions = models.UserDoorPermissions.query.all()
     users_doors_permissions_schema = schemas.UsersDoorsPermissionsSchema(many=True)
-    return users_doors_permissions_schema.dumps(
-        users_doors_permissions, ensure_ascii=False
+    response = make_response(
+        users_doors_permissions_schema.dumps(
+            users_doors_permissions, ensure_ascii=False
+        )
     )
+    response.headers["Content-Type"] = "application/json"
+    return response
 
 
 @app.route(api_prefix + "/doors_detailed_list/", methods=["GET"])
