@@ -5,17 +5,16 @@ import StatusComponent from "./StatusComponent";
 
 export interface DoorComponentProps {
     image: string;
-    door_status: boolean;
     door: DoorInterface;
 }
 
 const DoorComponent: React.FC<DoorComponentProps> = (props) => {
-    console.log("props", props.door);
+    const doorStatus = props.door.last_com !== "-";
     return (
         <div className="door-component--container">
             <div className="door-component--header">
                 <div className={"door-component--status"}>
-                    <StatusComponent status={props.door_status} />
+                    <StatusComponent status={doorStatus} />
                 </div>
                 <div className={"door-component--title"}>
                     {props.door.name} <span>#{props.door.id}</span>

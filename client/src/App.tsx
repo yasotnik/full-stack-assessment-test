@@ -6,6 +6,7 @@ import API from "./api/api";
 
 function App() {
     const [isLoading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
     const [fetchedDoors, setFetchedDoors] = useState<DoorInterface[]>([]);
 
     const doorsImages = [
@@ -21,12 +22,9 @@ function App() {
         "https://images.squarespace-cdn.com/content/v1/50a4739ae4b000dda4d98149/1404186421933-O4S2L8HD35QEEV3B2VNY/dickinson.jpg",
     ];
 
-    const doorsStatuses = [true, false];
-
     useEffect(() => {
-        API.get<DoorInterface[]>(`doors_detailed_list/page/${1}`)
+        API.get<DoorInterface[]>(`doors_detailed_list/page/${page}`)
             .then((res) => {
-                console.log(res.data);
                 setFetchedDoors(res.data);
                 setLoading(false);
             })
@@ -48,11 +46,6 @@ function App() {
                         image={
                             doorsImages[
                                 Math.floor(Math.random() * doorsImages.length)
-                            ]
-                        }
-                        door_status={
-                            doorsStatuses[
-                                Math.floor(Math.random() * doorsStatuses.length)
                             ]
                         }
                         door={door}
