@@ -1,38 +1,86 @@
-.App {
-  text-align: center;
+body {
+    background-color: #e7ebf0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.doors-app--container {
+    margin: 0 auto;
+    width: 1100px;
+    padding-top: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.door-component--container {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin-top: 1rem;
+    min-height: 400px;
+    padding: 1rem;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+        0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.door-component--header {
+    display: flex;
+    flex-direction: row;
 }
 
-.App-link {
-  color: #61dafb;
+.door-component--name {
+    display: flex;
+    font-size: 18pt;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.door-component--status {
+    display: flex;
+}
+
+.door-component--image-container {
+    display: flex;
+    margin-top: 1rem;
+    width: 100%;
+    height: 200px;
+}
+
+.door-component--image {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.status--container {
+    display: flex;
+    padding-right: 1rem;
+}
+
+.status--container-circle {
+    display: flex;
+    align-self: center;
+    border-radius: 50%;
+    min-width: 1rem;
+    min-height: 1rem;
+    max-height: 1rem;
+}
+
+.open {
+    background-color: #357a38;
+}
+
+.clsoed {
+    background-color: #ab003c;
+}
+
+.door-component--info {
+    display: flex;
+    flex-direction: column;
+}
+
+.door-component--info span {
+    margin-top: 0.5rem;
 }

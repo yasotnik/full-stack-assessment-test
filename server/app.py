@@ -3,6 +3,7 @@
 import json
 import redis
 from flask import Flask, make_response, request, abort
+from flask_cors import CORS
 from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -21,6 +22,7 @@ app = Flask(__name__)
 app.config.from_object("config.DebugConfig")
 db = SQLAlchemy()
 ma = Marshmallow()
+cors = CORS(app)
 db.init_app(app)
 
 redis = redis.Redis(host="127.0.0.1", port="6379", decode_responses=True)
