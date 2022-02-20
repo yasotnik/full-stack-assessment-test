@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # encoding: utf-8
 import json
-from flask import Flask
+from flask import Flask, make_response
 from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import db.schemas as schemas
 import db.models as models
 from constants import API_VERSION, BASE_API_URL
+from utils.utils import unpack_door_details, make_json_response
 
 app = Flask(__name__)
 app.config.from_object("config.DebugConfig")
@@ -38,7 +39,9 @@ def get_addresses_list():
 def get_doors_list():
     doors = models.Doors.query.all()
     doors_schema = schemas.DoorsSchema(many=True)
-    return doors_schema.dumps(doors, ensure_ascii=False)
+    response = make_response(doors_schema.dumps(doors, ensure_ascii=False))
+    response.headers["Content-Type"] = "application/json"
+    return response
 
 
 @app.route(api_prefix + "/users/", methods=["GET"])
@@ -55,6 +58,14 @@ def get_users_doors_permissions_list():
     return users_doors_permissions_schema.dumps(
         users_doors_permissions, ensure_ascii=False
     )
+
+
+@app.route(api_prefix + "/doors_detailed_list/", methods=["GET"])
+def get_doors_detailed():
+    doors_addresses_join = (
+        db.session.query(models.Doors, models.Addresses).join(models.Addresses).all()
+    )
+    return make_json_response(unpack_door_details(doors_addresses_join))
 
 
 app.run()

@@ -1,9 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import relationship
 
 db = SQLAlchemy()
 
 
 class Addresses(db.Model):
+    __tablename__ = "addresses"
     id = db.Column(db.Integer, primary_key=True)
     street = db.Column(db.String)
     postal_code = db.Column(db.String)
@@ -17,7 +19,7 @@ class Doors(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sensor_uuid = db.Column(db.String)
     name = db.Column(db.String)
-    address_id = db.Column(db.String)
+    address_id = db.Column(db.Integer, db.ForeignKey("addresses.id"))
     installation_time = db.Column(db.String)
 
 
