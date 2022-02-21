@@ -1,5 +1,5 @@
 export interface SelectFieldComponentProps {
-    options: string[] | number[];
+    options: string[];
 }
 
 const SelectFieldComponent: React.FC<SelectFieldComponentProps> = ({

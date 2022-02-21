@@ -35,13 +35,15 @@ const AddUserComponent: React.FC<AddUserComponentProps> = ({
                     }
                 />
             </div>
+
             <div className="user-info">
-                <div className="door-component--title">
-                    <span>
-                        <strong>Users list:</strong>
-                    </span>
-                </div>
+                <span>
+                    <strong>Add Users</strong>
+                </span>
                 <div className="separator--line"></div>
+                <span>
+                    <strong>Users list:</strong>
+                </span>
                 <SelectFieldComponent
                     options={users.map(
                         (user) =>
