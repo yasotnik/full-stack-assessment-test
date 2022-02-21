@@ -28,3 +28,11 @@ export interface DoorUsers {
     last_name: string;
     access_granted_at: string;
 }
+
+export interface User {
+    id: number;
+    email: string;
+    first_name: string;
+    last_name: string;
+    creation_time: string;
+}

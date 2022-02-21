@@ -57,7 +57,7 @@ const DoorComponent: React.FC<DoorComponentProps> = ({ image, door }) => {
             </div>
             <div className="door-component--button-container">
                 <Link to={`/doors/${door.id}`}>
-                    <ButtonComponent onClick={() => {}} />
+                    <ButtonComponent onClick={() => {}} text={"Users"} />
                 </Link>
             </div>
         </div>

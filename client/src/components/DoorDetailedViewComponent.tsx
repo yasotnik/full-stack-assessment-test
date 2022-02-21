@@ -3,6 +3,7 @@ import { DoorDetailedInfo, DoorUsers } from "../constants/commons";
 import API from "../api/api";
 import { useParams } from "react-router-dom";
 import UserComponent from "./UserComponent";
+import AddUserComponent from "./AddUserComponent";
 
 const DoorDetailedViewComponent: React.FC = (props) => {
     const [isLoading, setLoading] = useState(true);
@@ -36,16 +37,19 @@ const DoorDetailedViewComponent: React.FC = (props) => {
                 <div className="separator--line"></div>
                 <div className="detailed-view--container">
                     {doorUsers.length ? (
-                        doorUsers.map((user) => (
-                            <div key={user.access_granted_at}>
-                                <UserComponent user={user} />
-                            </div>
-                        ))
+                        <>
+                            {doorUsers.map((user) => (
+                                <div key={user.access_granted_at}>
+                                    <UserComponent user={user} />
+                                </div>
+                            ))}
+                        </>
                     ) : (
                         <span className="detailed-view--no-data">
                             {`No users found for ${doorName} door. 🤖`}
                         </span>
                     )}
+                    <AddUserComponent />
                 </div>
             </div>
         </>
