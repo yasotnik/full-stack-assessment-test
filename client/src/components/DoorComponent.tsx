@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { DoorInterface } from "../constants/commons";
 import ButtonComponent from "./ButtonComponent";
 import StatusComponent from "./StatusComponent";
@@ -38,7 +39,9 @@ const DoorComponent: React.FC<DoorComponentProps> = (props) => {
                 </span>
             </div>
             <div className="door-component--button-container">
-                <ButtonComponent onClick={() => {}} />
+                <Link to={`/doors/${props.door.id}`}>
+                    <ButtonComponent onClick={() => {}} />
+                </Link>
             </div>
         </div>
     );

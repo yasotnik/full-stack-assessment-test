@@ -16,3 +16,15 @@ export interface DoorAddressInterface {
     country_code: string;
     geolocation: string;
 }
+
+export interface DoorDetailedInfo {
+    door: string;
+    users: DoorUsers[];
+}
+
+export interface DoorUsers {
+    email: string;
+    first_name: string;
+    last_name: string;
+    access_granted_at: string;
+}
