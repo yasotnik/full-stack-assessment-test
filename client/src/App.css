@@ -33,6 +33,7 @@ body {
     flex-direction: column;
     width: 300px;
     margin-top: 1rem;
+    margin-right: 1rem;
     min-height: 300px;
     padding: 1rem;
     border-radius: 4px;
@@ -155,6 +156,7 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .user-component--container {
@@ -162,7 +164,7 @@ body {
     flex-direction: column;
     width: 300px;
     margin-top: 1rem;
-    margin-left: 1rem;
+    margin-right: 1rem;
     min-height: 350px;
     padding: 0 1rem;
     border-radius: 10px;
@@ -209,4 +211,10 @@ body {
     background-color: rgb(163, 163, 163);
     border-top: #414141;
     width: 100%;
+}
+
+.data--container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
 }

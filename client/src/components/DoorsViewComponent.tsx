@@ -50,18 +50,35 @@ const DoorsViewComponent: React.FC = () => {
 
     return (
         <>
-            {fetchedDoors.map((door) => (
-                <div key={door.id}>
-                    <DoorComponent
-                        image={
-                            doorsImages[
-                                Math.floor(Math.random() * doorsImages.length)
-                            ]
-                        }
-                        door={door}
-                    />
+            <div className="data--container">
+                <div className="door-component--title">
+                    <span>Doors:</span>
                 </div>
-            ))}
+                <div className="separator--line"></div>
+                <div className="detailed-view--container">
+                    {fetchedDoors.length ? (
+                        fetchedDoors.map((door) => (
+                            <div key={door.id}>
+                                <DoorComponent
+                                    image={
+                                        doorsImages[
+                                            Math.floor(
+                                                Math.random() *
+                                                    doorsImages.length
+                                            )
+                                        ]
+                                    }
+                                    door={door}
+                                />
+                            </div>
+                        ))
+                    ) : (
+                        <span className="detailed-view--no-data">
+                            {`No doors found. 🤖`}
+                        </span>
+                    )}
+                </div>
+            </div>
         </>
     );
 };

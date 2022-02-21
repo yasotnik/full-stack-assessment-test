@@ -29,18 +29,24 @@ const DoorDetailedViewComponent: React.FC = (props) => {
     }, []);
     return (
         <>
-            <div className="detailed-view--container">
-                {doorUsers.length ? (
-                    doorUsers.map((user) => (
-                        <div key={user.access_granted_at}>
-                            <UserComponent user={user} />
-                        </div>
-                    ))
-                ) : (
-                    <span className="detailed-view--no-data">
-                        {`No users found for ${doorName} door. 🤖`}
-                    </span>
-                )}
+            <div className="data--container">
+                <div className="door-component--title">
+                    <span>Users:</span>
+                </div>
+                <div className="separator--line"></div>
+                <div className="detailed-view--container">
+                    {doorUsers.length ? (
+                        doorUsers.map((user) => (
+                            <div key={user.access_granted_at}>
+                                <UserComponent user={user} />
+                            </div>
+                        ))
+                    ) : (
+                        <span className="detailed-view--no-data">
+                            {`No users found for ${doorName} door. 🤖`}
+                        </span>
+                    )}
+                </div>
             </div>
         </>
     );
