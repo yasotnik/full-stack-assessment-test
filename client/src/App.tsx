@@ -13,7 +13,7 @@ function App() {
         <div className="doors-app--container">
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<DoorsViewComponent />} />
+                    <Route path="/:pageNum" element={<DoorsViewComponent />} />
                     <Route
                         path="/doors/:doorId"
                         element={<DoorDetailedViewComponent />}

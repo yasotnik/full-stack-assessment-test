@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import DoorComponent from "./DoorComponent";
 import { DoorInterface } from "../constants/commons";
 import API from "../api/api";
+import { useParams } from "react-router";
 
 const DoorsViewComponent: React.FC = () => {
     const [isLoading, setLoading] = useState(true);
-    const [page, setPage] = useState(1);
     const [fetchedDoors, setFetchedDoors] = useState<DoorInterface[]>([]);
 
     const doorsImages = [
@@ -21,8 +21,11 @@ const DoorsViewComponent: React.FC = () => {
         "https://images.squarespace-cdn.com/content/v1/50a4739ae4b000dda4d98149/1404186421933-O4S2L8HD35QEEV3B2VNY/dickinson.jpg",
     ];
 
+    let params = useParams();
+
     useEffect(() => {
-        API.get<DoorInterface[]>(`doors_detailed_list/page/${page}`)
+        const pageNum = params.pageNum ? parseInt(params.pageNum) : 1;
+        API.get<DoorInterface[]>(`doors_detailed_list/page/${pageNum}`)
             .then((res) => {
                 setFetchedDoors(res.data);
                 setLoading(false);
