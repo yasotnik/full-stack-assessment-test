@@ -9,8 +9,8 @@ export interface DoorComponentProps {
     door: DoorInterface;
 }
 
-const DoorComponent: React.FC<DoorComponentProps> = (props) => {
-    const doorStatus = props.door.last_com !== "-";
+const DoorComponent: React.FC<DoorComponentProps> = ({ image, door }) => {
+    const doorStatus = door.last_com !== "-";
     return (
         <div className="door-component--container">
             <div className="door-component--header">
@@ -18,28 +18,45 @@ const DoorComponent: React.FC<DoorComponentProps> = (props) => {
                     <StatusComponent status={doorStatus} />
                 </div>
                 <div className={"door-component--title"}>
-                    {props.door.name} <span>#{props.door.id}</span>
+                    {door.name} <span>#{door.id}</span>
                 </div>
             </div>
             <div className="door-component--image-container">
-                <img className="door-component--image" src={props.image}></img>
+                <img className="door-component--image" src={image}></img>
             </div>
+            <div className="door-component--info-title">Time data:</div>
             <div className="door-component--info">
                 <span>
                     <strong>Installation time:</strong>
-                    {props.door.installation_time}
+                    {door.installation_time}
                 </span>
                 <span>
                     <strong>Last opening: </strong>
-                    {props.door.last_opening}
+                    {door.last_opening}
                 </span>
                 <span>
                     <strong>Last communication: </strong>
-                    {props.door.last_com}
+                    {door.last_com}
+                </span>
+            </div>
+            <div className="separator--line"></div>
+            <div className="door-component--info-title">Address:</div>
+            <div className="door-component--info">
+                <span>
+                    <strong>City/State:</strong>
+                    {door.address.city},{door.address.state}
+                </span>
+                <span>
+                    <strong>Street:</strong>
+                    {door.address.street}
+                </span>
+                <span>
+                    <strong>Country code/Postal code: </strong>
+                    {door.address.country_code},{door.address.postal_code}
                 </span>
             </div>
             <div className="door-component--button-container">
-                <Link to={`/doors/${props.door.id}`}>
+                <Link to={`/doors/${door.id}`}>
                     <ButtonComponent onClick={() => {}} />
                 </Link>
             </div>

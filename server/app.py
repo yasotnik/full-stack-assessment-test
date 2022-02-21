@@ -73,6 +73,13 @@ def get_doors_list():
     response.headers["Content-Type"] = "application/json"
     return response
 
+@app.route(api_prefix + "/doors/grant_permissions", methods=["PUT"])
+def grant_permissions():
+    query_parameters = request.args
+    if query_parameters.get("user-id"):
+        pass
+    else:abort(400)
+        
 
 @app.route(api_prefix + "/users/", methods=["GET"])
 def get_users_list():

@@ -1,3 +1,5 @@
+/* rewrite using SCSS !*/
+/* all classnames are design to be refactored using SCSS */
 body {
     background-color: #e7ebf0;
     font-family: Arial, Helvetica, sans-serif;
@@ -106,6 +108,13 @@ body {
     background-color: #ab003c;
 }
 
+.door-component--info-title {
+    padding-top: 1rem;
+    font-size: 20px;
+    color: #414141;
+    font-weight: 300;
+}
+
 .door-component--info {
     display: flex;
     flex-direction: column;
@@ -192,4 +201,12 @@ body {
 
 .detailed-view--no-data {
     font-size: 24px;
+}
+
+.separator--line {
+    margin-top: 0.5rem;
+    height: 1px;
+    background-color: rgb(163, 163, 163);
+    border-top: #414141;
+    width: 100%;
 }
