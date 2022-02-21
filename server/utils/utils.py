@@ -45,7 +45,7 @@ def unpack_door_users(door_users, door):
                 "email": user.email,
                 "first_name": user.first_name,
                 "last_name": user.last_name,
-                "access_granted_at": user_door.creation_time,
+                "access_granted_at": parse_timestamp_with_timezone(user_door.creation_time),
             }
         )
     return {"door": door.name, "users": users}
