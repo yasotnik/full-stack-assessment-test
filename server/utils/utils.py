@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from flask import make_response
 
 def timestamp_to_datetime(ts):
@@ -12,6 +12,9 @@ def parse_timestamp_with_timezone(tsz):
     if tsz:
         return datetime.strftime(tsz,"%Y-%m-%d %H:%M:%S")
     else: return "-"
+
+def get_current_tsz():
+    return datetime.now(timezone.utc)
 
 def unpack_door_details(doors_addresses, doors_last_open, door_last_comm):
     acc = []

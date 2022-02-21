@@ -16,7 +16,7 @@ from constants import (
     LAST_COMMUNICATION_KEY,
     MAX_DOORS_PER_PAGE,
 )
-from utils.utils import make_json_response, unpack_door_details, unpack_door_users
+from utils.utils import get_current_tsz, make_json_response, unpack_door_details, unpack_door_users
 
 app = Flask(__name__)
 app.config.from_object("config.DebugConfig")
@@ -76,9 +76,17 @@ def get_doors_list():
 @app.route(api_prefix + "/doors/grant_permissions", methods=["PUT"])
 def grant_permissions():
     query_parameters = request.args
-    if query_parameters.get("user-id"):
+    user_id = query_parameters.get("user_id")
+    door_id = query_parameters.get("door_id")
+    if user_id and door_id:
+        user_access = models.UserDoorPermissions(user_id=user_id, door_id=door_id, creation_time=get_current_tsz())
+        db.session.add(user_access)
+        db.session.commit()
+        response = make_response(json.dumps({'success':True}))
+        response.headers["Content-Type"] = "application/json"
+        return response
         pass
-    else:abort(400)
+    else: abort(400)
         
 
 @app.route(api_prefix + "/users/", methods=["GET"])
@@ -124,5 +132,8 @@ def get_doors_detailed(page=1):
         unpack_door_details(doors_addresses.items, doors_last_open, doors_last_comm)
     )
 
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db.session.remove()
 
 app.run()

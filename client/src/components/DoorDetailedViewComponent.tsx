@@ -49,8 +49,8 @@ const DoorDetailedViewComponent: React.FC = (props) => {
                             {`No users found for ${doorName} door. 🤖`}
                         </span>
                     )}
-                    <AddUserComponent />
                 </div>
+                <AddUserComponent />
             </div>
         </>
     );
