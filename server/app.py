@@ -2,6 +2,7 @@
 # encoding: utf-8
 import json
 import redis
+import os
 from flask import Flask, make_response, request, abort
 from flask_cors import CORS
 from sqlalchemy import create_engine
@@ -25,7 +26,9 @@ ma = Marshmallow()
 cors = CORS(app)
 db.init_app(app)
 
-redis = redis.Redis(host="127.0.0.1", port="6379", decode_responses=True)
+REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379")
+
+redis = redis.Redis(REDIS_URL, decode_responses=True)
 
 api_prefix = "/{}/{}".format(BASE_API_URL, API_VERSION)
 
@@ -137,4 +140,4 @@ def get_doors_detailed(page=1):
 def shutdown_session(exception=None):
     db.session.remove()
 
-app.run()
+app.run(host="0.0.0.0")

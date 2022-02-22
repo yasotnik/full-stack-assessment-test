@@ -1,20 +1,45 @@
 version: "3.8"
 services:
-  postgres:
-    image: postgres:13.1-alpine
-    container_name: kiwi-cc-postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./data/postgres/dump.sql:/data/dump.sql
-      - ./data/postgres/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
-    environment:
-      - POSTGRES_HOST_AUTH_METHOD=trust
+    postgres:
+        image: postgres:13.1-alpine
+        container_name: kiwi-cc-postgres
+        ports:
+            - "5432:5432"
+        volumes:
+            - ./data/postgres/dump.sql:/data/dump.sql
+            - ./data/postgres/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+        environment:
+            - POSTGRES_HOST_AUTH_METHOD=trust
 
-  redis:
-    image: redis:6.0-alpine
-    container_name: kiwi-cc-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - ./data/redis:/data
+    redis:
+        image: redis:6.0-alpine
+        container_name: kiwi-cc-redis
+        ports:
+            - "6379:6379"
+        volumes:
+            - ./data/redis:/data
+
+    server:
+        build:
+            context: ./server
+        container_name: kiwi-cc-api
+        ports:
+            - "5000:5000"
+        environment:
+            # - POSTGRES_URL=postgresql://kiwi@localhost:5432?client_encoding=utf8
+            # - REDIS_URL=redis://localhost:6379
+            - REDIS_URL=redis://redis
+            - POSTGRES_URL=postgresql://kiwi@postgres:5432?client_encoding=utf8
+        depends_on:
+            - postgres
+            - redis
+
+    client:
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+        container_name: kiwi-cc-ui
+        ports:
+            - "3000:3000"
+        depends_on:
+            - server
