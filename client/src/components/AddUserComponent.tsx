@@ -4,17 +4,30 @@ import { DoorUsers, User } from "../constants/commons";
 import ButtonComponent from "./ButtonComponent";
 import SelectFieldComponent from "./SelectFieldComponent";
 import API from "../api/api";
+import { useParams } from "react-router";
 
 export interface AddUserComponentProps {
-    user?: DoorUsers;
-    avatar?: string;
+    addUserCallback: any;
 }
 
 const AddUserComponent: React.FC<AddUserComponentProps> = ({
-    user,
-    avatar,
+    addUserCallback,
 }) => {
     const [users, setUsers] = useState<User[]>([]);
+    const [userId, setUserId] = useState<number>(0);
+
+    const params = useParams();
+    const door_id = parseInt(params.doorId ? params.doorId : "1");
+
+    const addUser = (user_id: number, door_id: number) => {
+        if (user_id !== 0 && door_id !== 0) {
+            API.put(
+                `doors/grant_permissions?user_id=${user_id}&door_id=${door_id}`
+            ).then((res) => {
+                addUserCallback();
+            });
+        }
+    };
 
     useEffect(() => {
         API.get<User[]>(`users`)
@@ -44,14 +57,12 @@ const AddUserComponent: React.FC<AddUserComponentProps> = ({
                 <span>
                     <strong>Users list:</strong>
                 </span>
-                <SelectFieldComponent
-                    options={users.map(
-                        (user) =>
-                            `#${user.id}, ${user.first_name} ${user.last_name}`
-                    )}
-                />
+                <SelectFieldComponent options={users} onChange={setUserId} />
                 <div className="door-component--button-container">
-                    <ButtonComponent onClick={() => {}} text={"Add"} />
+                    <ButtonComponent
+                        onClick={() => addUser(userId, door_id)}
+                        text={"Add user"}
+                    />
                 </div>
             </div>
         </div>

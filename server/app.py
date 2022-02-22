@@ -73,6 +73,7 @@ def get_doors_list():
     response.headers["Content-Type"] = "application/json"
     return response
 
+# put should not add new items on consecutiove executions but ...
 @app.route(api_prefix + "/doors/grant_permissions", methods=["PUT"])
 def grant_permissions():
     query_parameters = request.args

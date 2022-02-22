@@ -6,9 +6,9 @@ import UserComponent from "./UserComponent";
 import AddUserComponent from "./AddUserComponent";
 
 const DoorDetailedViewComponent: React.FC = (props) => {
-    const [isLoading, setLoading] = useState(true);
     const [doorUsers, setDoorUsers] = useState<DoorUsers[]>([]);
     const [doorName, setDoorName] = useState("");
+    const [userAdded, setUserAdded] = useState(false);
 
     let params = useParams();
 
@@ -21,13 +21,11 @@ const DoorDetailedViewComponent: React.FC = (props) => {
             .then((res) => {
                 setDoorUsers(res.data.users);
                 setDoorName(res.data.door);
-                setLoading(false);
             })
             .catch((err) => {
                 console.error(err);
-                setLoading(false);
             });
-    }, []);
+    }, [userAdded]);
     return (
         <>
             <div className="data--container">
@@ -50,7 +48,9 @@ const DoorDetailedViewComponent: React.FC = (props) => {
                         </span>
                     )}
                 </div>
-                <AddUserComponent />
+                <AddUserComponent
+                    addUserCallback={() => setUserAdded(!userAdded)}
+                />
             </div>
         </>
     );
