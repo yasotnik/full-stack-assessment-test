@@ -5,6 +5,7 @@ import API from "../api/api";
 import { useParams } from "react-router";
 
 const DoorsViewComponent: React.FC = () => {
+    // useContext?
     const [isLoading, setLoading] = useState(true);
     const [fetchedDoors, setFetchedDoors] = useState<DoorInterface[]>([]);
 
@@ -17,8 +18,9 @@ const DoorsViewComponent: React.FC = () => {
         "https://www.marvin.com/-/media/project/tenant/marvin/blog/front-door-trends/front-doors-02.jpg?h=553&w=800&ts=6071311f-1750-4093-adef-1df87f78fdfc&hash=A7B0B78D92A5CDD27A032C54C76B6C65",
         "https://www.livingwoodwindows.co.uk/wp-content/uploads/2015/11/modern-door-1-567x567@2x.jpg",
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu2WsPjANAXXIWH2yz5mJndBwQMSvvODUSEg&usqp=CAU",
-        "https://force8.uk/wp-content/uploads/2018/11/valencia-door-for-modern-page.jpg",
-        "https://images.squarespace-cdn.com/content/v1/50a4739ae4b000dda4d98149/1404186421933-O4S2L8HD35QEEV3B2VNY/dickinson.jpg",
+        "https://image.made-in-china.com/202f0j00TWzRdeVhrFqA/Modern-Front-Door-Foshan-Factory-Made-Pivot-Aluminum-Doors.jpg",
+        "https://media.emeralddoors.co.uk/media/catalog/product/cache/1/thumbnail/500x/68938dc477c6218590d5fbca39d86478/n/e/newmarket_solid_roomset.jpg",
+        "https://www.urbandoorscompany.com/wp-content/uploads/2019/10/moroccan.jpg",
     ];
 
     let params = useParams();
@@ -34,12 +36,13 @@ const DoorsViewComponent: React.FC = () => {
                 console.error(err);
                 setLoading(false);
             });
-    }, []);
+    }, [params.pageNum]);
 
     if (isLoading) {
         return (
             <div className="loading--container">
                 <img
+                    alt={"Loading..."}
                     src={
                         "https://cdn.vox-cdn.com/thumbor/DMXD2zLif49j6IP2i3Avda2Cyl0=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/22312759/rickroll_4k.jpg"
                     }

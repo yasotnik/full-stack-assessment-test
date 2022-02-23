@@ -11,6 +11,7 @@ const UserComponent: React.FC<UserComponentProps> = ({ user, avatar }) => {
         <div className="user-component--container">
             <div className="user-avatar">
                 <img
+                    alt={user.first_name}
                     src={
                         "https://pbs.twimg.com/profile_images/1133109643734130688/BwioAwkz_400x400.jpg"
                     }

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { User } from "../constants/commons";
 
 export interface SelectFieldComponentProps {
