@@ -25,7 +25,7 @@ const DoorDetailedViewComponent: React.FC = (props) => {
             .catch((err) => {
                 console.error(err);
             });
-    }, [userAdded]);
+    }, [userAdded, params.doorId]);
     return (
         <>
             <div className="data--container">
@@ -35,13 +35,11 @@ const DoorDetailedViewComponent: React.FC = (props) => {
                 <div className="separator--line"></div>
                 <div className="detailed-view--container">
                     {doorUsers.length ? (
-                        <>
-                            {doorUsers.map((user) => (
-                                <div key={user.access_granted_at}>
-                                    <UserComponent user={user} />
-                                </div>
-                            ))}
-                        </>
+                        doorUsers.map((user) => (
+                            <div key={user.access_granted_at}>
+                                <UserComponent user={user} />
+                            </div>
+                        ))
                     ) : (
                         <span className="detailed-view--no-data">
                             {`No users found for ${doorName} door. 🤖`}

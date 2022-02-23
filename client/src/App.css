@@ -128,7 +128,7 @@ body {
 
 .door-component--button-container {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     padding-top: 1rem;
 }
 

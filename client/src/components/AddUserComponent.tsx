@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { DoorUsers, User } from "../constants/commons";
+import { User } from "../constants/commons";
 import ButtonComponent from "./ButtonComponent";
 import SelectFieldComponent from "./SelectFieldComponent";
 import API from "../api/api";
@@ -43,6 +43,7 @@ const AddUserComponent: React.FC<AddUserComponentProps> = ({
         <div className="user-component--container">
             <div className="user-avatar low-opacity">
                 <img
+                    alt={"Add new user..."}
                     src={
                         "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
                     }

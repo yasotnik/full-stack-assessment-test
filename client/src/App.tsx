@@ -1,10 +1,4 @@
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    BrowserRouter,
-    useRoutes,
-} from "react-router-dom";
+import { BrowserRouter as Router, useRoutes } from "react-router-dom";
 import DoorsViewComponent from "./components/DoorsViewComponent";
 import "./App.css";
 import DoorDetailedViewComponent from "./components/DoorDetailedViewComponent";

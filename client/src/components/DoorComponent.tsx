@@ -22,7 +22,11 @@ const DoorComponent: React.FC<DoorComponentProps> = ({ image, door }) => {
                 </div>
             </div>
             <div className="door-component--image-container">
-                <img className="door-component--image" src={image}></img>
+                <img
+                    alt={door.name}
+                    className="door-component--image"
+                    src={image}
+                ></img>
             </div>
             <div className="door-component--info-title">Time data:</div>
             <div className="door-component--info">

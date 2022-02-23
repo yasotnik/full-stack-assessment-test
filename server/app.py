@@ -17,23 +17,29 @@ from constants import (
     LAST_COMMUNICATION_KEY,
     MAX_DOORS_PER_PAGE,
 )
-from utils.utils import get_current_tsz, make_json_response, unpack_door_details, unpack_door_users
+from utils.utils import (
+    get_current_tsz,
+    make_json_response,
+    unpack_door_details,
+    unpack_door_users,
+)
 
 app = Flask(__name__)
 app.config.from_object("config.DebugConfig")
 db = SQLAlchemy()
 ma = Marshmallow()
+# Ok for now
 cors = CORS(app, CORS_ALLOW_HEADERS="*")
 db.init_app(app)
 
-REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379")
-
-redis = redis.Redis(REDIS_URL, decode_responses=True)
+REDIS_HOST = os.environ.get("REDIS_HOST", "redis://127.0.0.1")
+REDIS_PORT = os.environ.get("REDIS_PORT", "6379")
+redis = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
 
 api_prefix = "/{}/{}".format(BASE_API_URL, API_VERSION)
 
 
-@app.route("/" + BASE_API_URL + "/is_online/", methods=["GET"]) 
+@app.route("/" + BASE_API_URL + "/is_online/", methods=["GET"])
 def health_check():
     return json.dumps(
         {
@@ -76,6 +82,7 @@ def get_doors_list():
     response.headers["Content-Type"] = "application/json"
     return response
 
+
 # put should not add new items on consecutiove executions but ...
 @app.route(api_prefix + "/doors/grant_permissions", methods=["PUT"])
 def grant_permissions():
@@ -83,15 +90,18 @@ def grant_permissions():
     user_id = query_parameters.get("user_id")
     door_id = query_parameters.get("door_id")
     if user_id and door_id:
-        user_access = models.UserDoorPermissions(user_id=user_id, door_id=door_id, creation_time=get_current_tsz())
+        user_access = models.UserDoorPermissions(
+            user_id=user_id, door_id=door_id, creation_time=get_current_tsz()
+        )
         db.session.add(user_access)
         db.session.commit()
-        response = make_response(json.dumps({'success':True}))
+        response = make_response(json.dumps({"success": True}))
         response.headers["Content-Type"] = "application/json"
         return response
         pass
-    else: abort(400)
-        
+    else:
+        abort(400)
+
 
 @app.route(api_prefix + "/users/", methods=["GET"])
 def get_users_list():
@@ -136,8 +146,5 @@ def get_doors_detailed(page=1):
         unpack_door_details(doors_addresses.items, doors_last_open, doors_last_comm)
     )
 
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    db.session.remove()
 
 app.run(host="0.0.0.0")
