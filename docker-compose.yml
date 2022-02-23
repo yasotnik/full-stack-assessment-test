@@ -26,8 +26,7 @@ services:
         ports:
             - "5000:5000"
         environment:
-            # - POSTGRES_URL=postgresql://kiwi@localhost:5432?client_encoding=utf8
-            # - REDIS_URL=redis://localhost:6379
+            - REDIS_HOST=0.0.0.0
             - REDIS_URL=redis://redis
             - POSTGRES_URL=postgresql://kiwi@postgres:5432?client_encoding=utf8
         depends_on:

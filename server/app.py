@@ -23,7 +23,7 @@ app = Flask(__name__)
 app.config.from_object("config.DebugConfig")
 db = SQLAlchemy()
 ma = Marshmallow()
-cors = CORS(app)
+cors = CORS(app, CORS_ALLOW_HEADERS="*")
 db.init_app(app)
 
 REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379")
@@ -33,7 +33,7 @@ redis = redis.Redis(REDIS_URL, decode_responses=True)
 api_prefix = "/{}/{}".format(BASE_API_URL, API_VERSION)
 
 
-@app.route("/" + BASE_API_URL + "/is_online/", methods=["GET"])
+@app.route("/" + BASE_API_URL + "/is_online/", methods=["GET"]) 
 def health_check():
     return json.dumps(
         {
